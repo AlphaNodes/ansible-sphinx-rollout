@@ -1,15 +1,11 @@
 ---
 
-- fail:
-    msg: 'sphinx_rollout_instance variable has to be set with --extra-vars "sphinx_rollout_instance=project"'
-  when: sphinx_rollout_instance == ''
-
 - name: Include instance tasks
   include_tasks: instance.yml
   loop: "{{ sphinx_instances }}"
   loop_control:
     loop_var: instance
   when: >
-    instance.name == sphinx_rollout_instance and
+    (sphinx_rollout_instance is undefined or instance.name == sphinx_rollout_instance) and
     (instance.state is undefined or instance.state == 'active')
   tags: sphinx
