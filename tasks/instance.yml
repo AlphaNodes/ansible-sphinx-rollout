@@ -8,7 +8,7 @@
   git:
     repo: '{{ instance.repo }}'
     dest: '{{ sphinx_dir }}'
-    version: '{{ instance.git_version | default(omit) }}'
+    version: '{{ instance.repo_version | default(omit) }}'
     accept_hostkey: true
   register: git_result
 
