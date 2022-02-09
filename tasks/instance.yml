@@ -1,0 +1,42 @@
+---
+
+- name: Set sphinx_dir
+  set_fact:
+    sphinx_dir: "{{ instance.dir | default(sphinx_base_dir + '/' + instance.name) }}"
+
+- name: Install sphinx - {{ instance.name }}
+  git:
+    repo: '{{ instance.repo }}'
+    dest: '{{ sphinx_dir }}'
+    version: '{{ instance.git_version | default(omit) }}'
+    accept_hostkey: true
+  register: git_result
+
+- name: build
+  block:
+    - name: Run sphinx clean - {{ instance.name }}
+      command: make clean
+      args:
+        chdir: '{{ sphinx_dir }}/{{ item.name }}'
+      loop: '{{ instance.dirs | default([]) }}'
+
+    - name: Run sphinx build html - {{ instance.name }}
+      command: make html
+      args:
+        chdir: '{{ sphinx_dir }}/{{ item.name }}'
+      loop: '{{ instance.dirs | default([]) }}'
+
+    - name: Run sphinx build pdf - {{ instance.name }}
+      command: make latexpdf
+      args:
+        chdir: '{{ sphinx_dir }}/{{ item.name }}'
+      loop: '{{ instance.dirs | default([]) }}'
+
+    - name: Create pdf link for download - {{ instance.name }}
+      file:
+        src: '{{ sphinx_dir }}/{{ item.name }}/_build/latex/{{ item.ref_to | default(item.name) }}.pdf'
+        dest: '{{ sphinx_dir }}/{{ item.name }}/_build/html/{{ item.name }}.pdf'
+        state: link
+      loop: '{{ instance.dirs | default([]) }}'
+
+  when: (git_result is defined and git_result.changed) or sphinx_always_build
