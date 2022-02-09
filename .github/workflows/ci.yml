@@ -4,9 +4,7 @@ name: CI
   pull_request:
   push:
     branches:
-      - master
-  schedule:
-    - cron: "0 1 * * 3"
+      - main
 
 defaults:
   run:
@@ -41,7 +39,7 @@ jobs:
       matrix:
         distro:
           - ubuntu2004
-          - debian10
+          - debian11
 
     steps:
       - name: Check out the codebase.
