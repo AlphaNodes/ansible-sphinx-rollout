@@ -3,4 +3,4 @@
   hosts: all
 
   roles:
-    - role: AlphaNodes.sphinx-rollout
+    - role: alphanodes.sphinx_rollout
