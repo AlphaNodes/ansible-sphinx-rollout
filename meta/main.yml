@@ -1,7 +1,9 @@
 ---
+dependencies: []
 
 galaxy_info:
-  role_name: sphinx-rollout
+  role_name: sphinx_rollout
+  namespace: alphanodes
   description: Run sphinx rollout
   author: alexandermeindl
   company: AlphaNodes GmbH

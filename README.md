@@ -8,8 +8,8 @@ Rollout sphinx repositories
 
 Using ansible galaxy cli:
 
-```bash
-ansible-galaxy install alphanodes.sphinx-rollout
+```shell
+ansible-galaxy install alphanodes.sphinx_rollout
 ```
 
 ## Role Variables
@@ -38,7 +38,7 @@ sphinx and git has to be installed.
           - name: dir2
     sphinx_rollout_instance: docs
   roles:
-    - AlphaNodes.sphinx-rollout
+    - alphanodes.sphinx_rollout
 ```
 
 ## License
